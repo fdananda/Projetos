@@ -1,5 +1,5 @@
     Aplicativos Meus Favoritos
-    App do tipo Ferramentas para Android - 10/2020<br>
+    App do tipo Ferramentas para Android - 10/2020
     https://play.google.com/store/apps/details?id=com.fdananda.meusfavoritos
 
     Site Danpnobre 
