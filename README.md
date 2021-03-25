@@ -1,7 +1,7 @@
 # Projetos
 Links para projetos desenvolvidos
 
- <h4><Aplicativos Meus Favoritos</h4> 
+ <h4>Aplicativos Meus Favoritos</h4> 
  App do tipo Ferramentas para Android - 10/2020<br>
  https://play.google.com/store/apps/details?id=com.fdananda.meusfavoritos
 
