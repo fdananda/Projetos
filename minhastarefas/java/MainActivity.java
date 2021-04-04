@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 public class MainActivity extends AppCompatActivity {
 
     private DiariasFragment diariasFragment;
@@ -38,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //Apresentar o conteúdo DiáiasFragment com o clique do botão
+                //Apresentar o conteúdo DiáriasFragment com o clique do botão
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frameConteudo, diariasFragment);
                 transaction.commit();
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //Apresentar o conteúdo DiáiasFragment com o clique do botão
+                //Apresentar o conteúdo EventuaisFragment com o clique do botão
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frameConteudo, eventuaisFragment);
                 transaction.commit();
@@ -62,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //Apresentar o conteúdo DiáiasFragment com o clique do botão
+                //Apresentar o conteúdo AdicionarFragment com o clique do botão
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frameConteudo, adicionarFragment);
                 transaction.commit();
