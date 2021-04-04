@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,7 +15,8 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:contentDescription="Botão Incluir">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -151,11 +153,26 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerTarefasDiarias"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
 
             </LinearLayout>
+
         </ScrollView>
 
     </LinearLayout>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabDiarias"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_margin="10dp"
+        android:clickable="true"
+        android:contentDescription="Botão Incluir"
+        android:src="@drawable/ic_botao_incluir_branco"
+        app:backgroundTint="@color/colorAccent"
+        app:fabSize="normal" />
 </FrameLayout>
