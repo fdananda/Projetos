@@ -23,6 +23,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.fdananda.minhastarefas.adapter.AdapterEventuais;
 import com.fdananda.minhastarefas.model.Eventuais;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.List;
 import static android.content.Context.MODE_PRIVATE;
@@ -44,6 +46,7 @@ public class EventuaisFragment extends Fragment {
     private CheckBox checkBoxFeito;
     private EditarFragment editarFragment;
     private ExcluirFragment excluirFragment;
+    private AdicionarFragment adicionarFragment;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,6 +62,20 @@ public class EventuaisFragment extends Fragment {
         editarFragment          = new EditarFragment();
         imageExcluir            = view.findViewById(R.id.imageExcluirEventuais);
         excluirFragment         = new ExcluirFragment();
+        adicionarFragment         = new AdicionarFragment();
+
+        //FAB
+        FloatingActionButton fab = view.findViewById(R.id.fabEventuais);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Intent intent = new Intent(getActivity().getApplicationContext(), AdicionarFragment.class);
+                //startActivity(intent);
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frameConteudo, adicionarFragment);
+                transaction.commit();
+            }
+        });
 
         // Listagem de Tarefas
         this.criarTarefas();
