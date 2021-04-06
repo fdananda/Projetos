@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     private EventuaisFragment eventuaisFragment;
     private AdicionarFragment adicionarFragment;
     private VerTodasFragment verTodasFragment;
+    private RealizadasFragment realizadasFragment;
     private Button buttonAtvsDiarias;
     private Button buttonAtvsEventuais;
     private Button buttonAtvsAdicionar;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         eventuaisFragment = new EventuaisFragment();
         adicionarFragment = new AdicionarFragment();
         verTodasFragment  = new VerTodasFragment();
+        realizadasFragment = new RealizadasFragment();
         buttonAtvsDiarias = findViewById(R.id.buttonAtvsDiarias);
         buttonAtvsEventuais = findViewById(R.id.buttonAtvsEventuais);
         buttonAtvsAdicionar = findViewById(R.id.buttonAtvsAdicionar);
@@ -88,6 +90,18 @@ public class MainActivity extends AppCompatActivity {
                 //Apresentar o conteúdo AdicionarFragment com o clique do botão
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frameConteudo, verTodasFragment);
+                transaction.commit();
+            }
+        });
+
+        //Clique no texto Ver Todas
+        textRealizadas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //Apresentar o conteúdo AdicionarFragment com o clique do botão
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frameConteudo, realizadasFragment);
                 transaction.commit();
             }
         });
