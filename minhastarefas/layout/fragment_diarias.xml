@@ -63,7 +63,7 @@
                         android:id="@+id/imageViewIniciarDiarias"
                         android:layout_width="35dp"
                         android:layout_height="32dp"
-                        android:background="@drawable/botaosombra"
+                        android:background="@drawable/botaoadicionar"
                         android:contentDescription="Botão Limpar"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
@@ -91,7 +91,7 @@
                         android:id="@+id/imageEditarDiarias"
                         android:layout_width="35dp"
                         android:layout_height="32dp"
-                        android:background="@drawable/botaosombra"
+                        android:background="@drawable/botaoadicionar"
                         android:contentDescription="Botão Editar"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
@@ -119,7 +119,7 @@
                         android:id="@+id/imageExcluirDiarias"
                         android:layout_width="35dp"
                         android:layout_height="32dp"
-                        android:background="@drawable/botaosombra"
+                        android:background="@drawable/botaoadicionar"
                         android:contentDescription="Botão Excluir"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
@@ -175,4 +175,5 @@
         android:src="@drawable/ic_botao_incluir_branco"
         app:backgroundTint="@color/colorAccent"
         app:fabSize="normal" />
+
 </FrameLayout>
