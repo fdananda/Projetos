@@ -1,140 +1,378 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".RealizadasFragment">
+package com.fdananda.minhastarefas;
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+import com.fdananda.minhastarefas.adapter.AdapterDiarias;
+import com.fdananda.minhastarefas.adapter.AdapterEventuais;
+import com.fdananda.minhastarefas.model.Diarias;
+import com.fdananda.minhastarefas.model.Eventuais;
+import java.util.ArrayList;
+import java.util.List;
+import static android.content.Context.MODE_PRIVATE;
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingBottom="16dp">
-
-                    <TextView
-                        android:id="@+id/titutloVerRealizadas"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:padding="4dp"
-                        android:text="Realizadas"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textSize="16sp" />
-
-                    <View
-                        android:id="@+id/divider22"
-                        android:layout_width="5dp"
-                        android:layout_height="match_parent"
-                        android:background="@android:color/transparent" />
-
-                    <ImageView
-                        android:id="@+id/imageVoltarRealizadas"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:background="@drawable/botaosombra"
-                        android:contentDescription="Botão Voltar"
-                        android:paddingLeft="5dp"
-                        android:paddingRight="5dp"
-                        android:src="@drawable/ic_arrow_back_orange_24dp" />
-
-                    <View
-                        android:id="@+id/divider23"
-                        android:layout_width="5dp"
-                        android:layout_height="match_parent"
-                        android:background="@android:color/transparent" />
-
-                </LinearLayout>
-
-                <View
-                    android:id="@+id/divider119"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="?android:attr/listDivider" />
-
-                <TextView
-                    android:id="@+id/verRealizadasTarefasDiarias"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:textColor="@android:color/white"
-                    android:background="@color/colorAccent"
-                    android:gravity="center_vertical"
-                    android:padding="4dp"
-                    android:text="Tarefas Diárias"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textSize="16sp" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerVerRealizadasTarefasDiarias"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-                <TextView
-                    android:id="@+id/textViewtextoVazioDiariasVerRealizadas"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="16dp"
-                    android:text="Você não possui nenhuma tarefa diária realizada!"
-                    android:visibility="gone" />
+public class RealizadasFragment extends Fragment {
 
 
-                <View
-                    android:id="@+id/divider101"
-                    android:layout_width="match_parent"
-                    android:layout_height="10dp"
-                    android:layout_weight="1"
-                    android:background="?android:attr/listDivider"
-                    android:backgroundTint="@color/black" />
+    public RealizadasFragment() {
+        // Required empty public constructor
+    }
 
-                <TextView
-                    android:id="@+id/verRealizadasTarefasEventuais"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:padding="4dp"
-                    android:text="Tarefas Eventuais"
-                    android:textColor="@android:color/white"
-                    android:background="@color/colorAccent"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textSize="16sp" />
+    private ImageView imageVoltar;
+    private DiariasFragment diariasFragment;
+    private AdapterDiarias adapterDiarias;
+    private RecyclerView recyclerViewTarefasDiarias;
+    private List<Diarias> listaDiarias = new ArrayList<>();
+    private TextView textoVazioDiarias;
+    private CheckBox checkBoxFeito;
+    private AdapterEventuais adapterEventuais;
+    private RecyclerView recyclerViewTarefasEventuais;
+    private List<Eventuais> listaEventuais = new ArrayList<>();
+    private TextView textoVazioEventuais;
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerVerRealizadasTarefasEventuais"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+    @Override
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_realizadas, container, false);
 
-                <TextView
-                    android:id="@+id/textViewtextoVazioEventuaisVerRealizadas"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="16dp"
-                    android:text="Você não possui nenhuma tarefa eventual realizada!"
-                    android:visibility="gone" />
+        //Inicializar componentes
+        recyclerViewTarefasDiarias   = view.findViewById(R.id.recyclerVerRealizadasTarefasDiarias);
+        recyclerViewTarefasEventuais = view.findViewById(R.id.recyclerVerRealizadasTarefasEventuais);
+        textoVazioDiarias            = view.findViewById(R.id.textViewtextoVazioDiariasVerRealizadas);
+        textoVazioEventuais          = view.findViewById(R.id.textViewtextoVazioEventuaisVerRealizadas);
+        imageVoltar                  = view.findViewById(R.id.imageVoltarRealizadas);
+        diariasFragment              = new DiariasFragment();
 
-            </LinearLayout>
-        </ScrollView>
+        // Listagem de Tarefas
+        this.criarTarefasDiarias();
+        this.criarTarefasEventuais();
 
-    </LinearLayout>
+        //Configurar o Adapter
+        adapterDiarias = new AdapterDiarias(listaDiarias);
+        adapterEventuais = new AdapterEventuais(listaEventuais);
 
-</FrameLayout>
+        //Configurar o Recyclerview Diárias
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerViewTarefasDiarias.setLayoutManager(layoutManager);
+        recyclerViewTarefasDiarias.setHasFixedSize(true);
+        recyclerViewTarefasDiarias.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayout.VERTICAL));  // Linha divisória
+        recyclerViewTarefasDiarias.setAdapter(adapterDiarias);
+
+        //Configurar o Recyclerview Eventuais
+        RecyclerView.LayoutManager layoutManager2 = new LinearLayoutManager(getActivity());
+        recyclerViewTarefasEventuais.setLayoutManager(layoutManager2);
+        recyclerViewTarefasEventuais.setHasFixedSize(true);
+        recyclerViewTarefasEventuais.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayout.VERTICAL));  // Linha divisória
+        recyclerViewTarefasEventuais.setAdapter(adapterEventuais);
+
+        //Mostrar texto vazio Diárias
+        if(listaDiarias.size()>0){
+            textoVazioDiarias.setVisibility(View.GONE);
+        }else{
+            textoVazioDiarias.setVisibility(View.VISIBLE);
+        }
+
+        //Mostrar texto vazio Eventuais
+        if(listaEventuais.size()>0){
+            textoVazioEventuais.setVisibility(View.GONE);
+        }else{
+            textoVazioEventuais.setVisibility(View.VISIBLE);
+        }
+
+        //Botão voltar
+        imageVoltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frameConteudo, diariasFragment);
+                transaction.commit();
+            }
+        });
+        //Fim botão voltar
+
+        //Inserir evento de click em Tarefas Diárias
+        //Inserir evento de click
+        recyclerViewTarefasDiarias.addOnItemTouchListener(
+                new RecyclerItemClickListener(
+                        getActivity(),
+                        recyclerViewTarefasDiarias,
+                        new RecyclerItemClickListener.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(View view, int position) {
+
+                                checkBoxFeito = view.findViewById(R.id.nomeCheckbox);
+                                //Início alterar checkbox
+                                if (checkBoxFeito.isChecked()){
+                                    checkBoxFeito.setChecked(false);
+                                    checkBoxFeito.setBackgroundColor(getResources().getColor(R.color.colorTransparente));
+
+                                    final Diarias tarefasDiarias = listaDiarias.get(position);
+                                    SQLiteDatabase bancoDados = getActivity().getApplicationContext().openOrCreateDatabase("minhatarefas", MODE_PRIVATE, null);
+                                    bancoDados.execSQL("UPDATE tarefas SET status = '" + "N" + "' WHERE  nome = '" + tarefasDiarias.getNomeTarefa() + "'");
+
+                                }else{
+                                    checkBoxFeito.setChecked(true);
+                                    checkBoxFeito.setBackgroundColor(getResources().getColor(R.color.colorFeito));
+
+                                    final Diarias tarefasDiarias = listaDiarias.get(position);
+                                    SQLiteDatabase bancoDados = getActivity().getApplicationContext().openOrCreateDatabase("minhatarefas", MODE_PRIVATE, null);
+                                    bancoDados.execSQL("UPDATE tarefas SET status = '" + "S" + "' WHERE  nome = '" + tarefasDiarias.getNomeTarefa() + "'");
+                                }
+                                //Fim alterar checkbok
+                            }
+
+                            @Override
+                            public void onLongItemClick(View view, int position) {
+                                final Diarias tarefasDiarias = listaDiarias.get(position);
+
+                                //Instanciar alertDialog
+                                AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+                                dialog.setCancelable(true);
+                                dialog.setIcon(android.R.drawable.ic_menu_close_clear_cancel);
+                                dialog.setTitle("Excluir Tarefa");
+                                dialog.setMessage("Deseja excluir permanentemente a tarefa diária " + tarefasDiarias.getNomeTarefa() + " ?");
+                                //Configurar ações para Sim e Não
+                                dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        //Deletar registro
+                                        try {
+                                            SQLiteDatabase bancoDados = getActivity().getApplicationContext().openOrCreateDatabase("minhatarefas", MODE_PRIVATE, null);
+                                            bancoDados.execSQL("DELETE from tarefas WHERE nome = '" + tarefasDiarias.getNomeTarefa() + "' AND  tipo = 'Diária' AND id = '" + tarefasDiarias.getId() + "'");
+                                            startActivity(new Intent(getContext(), MainActivity.class));
+                                            getActivity().finish();
+
+                                        }catch (Exception e){
+                                            e.printStackTrace();
+                                        }
+
+                                        Toast.makeText(getContext(),
+                                                "Exclusão realizada com sucesso!",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+                                dialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Toast.makeText(getContext(),
+                                                "Exclusão cancelada!",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                // Criar e exibir AlertDialog
+                                dialog.create();
+                                dialog.show();
+
+                            }
+
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            }
+                        }
+                )
+        );
+
+        // Fim evento de clique
+
+        //Inserir evento de click em Tarefas Eventuais
+        //Início evento de clique
+        recyclerViewTarefasEventuais.addOnItemTouchListener(
+                new RecyclerItemClickListener(
+                        getActivity(),
+                        recyclerViewTarefasEventuais,
+                        new RecyclerItemClickListener.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(View view, int position) {
+
+                                checkBoxFeito = view.findViewById(R.id.nomeCheckbox);
+                                //Início alterar checkbox
+                                if (checkBoxFeito.isChecked()){
+                                    checkBoxFeito.setChecked(false);
+                                    checkBoxFeito.setBackgroundColor(getResources().getColor(R.color.colorTransparente));
+
+                                    final Eventuais tarefasEventuais = listaEventuais.get(position);
+                                    SQLiteDatabase bancoDados = getActivity().getApplicationContext().openOrCreateDatabase("minhatarefas", MODE_PRIVATE, null);
+                                    bancoDados.execSQL("UPDATE tarefas SET status = '" + "N" + "' WHERE  nome = '" + tarefasEventuais.getNomeTarefa() + "'");
+
+                                }else{
+                                    checkBoxFeito.setChecked(true);
+                                    checkBoxFeito.setBackgroundColor(getResources().getColor(R.color.colorFeito));
+
+                                    final Eventuais tarefasEventuais = listaEventuais.get(position);
+                                    SQLiteDatabase bancoDados = getActivity().getApplicationContext().openOrCreateDatabase("minhatarefas", MODE_PRIVATE, null);
+                                    bancoDados.execSQL("UPDATE tarefas SET status = '" + "S" + "' WHERE  nome = '" + tarefasEventuais.getNomeTarefa() + "'");
+
+                                }
+                                //Fim alterar checkbok
+
+                            }
+
+                            @Override
+                            public void onLongItemClick(View view, int position) {
+                                final Eventuais tarefasEventuais = listaEventuais.get(position);
+
+                                //Instanciar alertDialog
+                                AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+                                dialog.setCancelable(true);
+                                dialog.setIcon(android.R.drawable.ic_menu_close_clear_cancel);
+                                dialog.setTitle("Excluir Tarefa");
+                                dialog.setMessage("Deseja excluir permanentemente a tarefa eventual " + tarefasEventuais.getNomeTarefa() + " ?");
+                                //Configurar ações para Sim e Não
+                                dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        //Deletar um registro
+                                        try {
+                                            SQLiteDatabase bancoDados = getActivity().getApplicationContext().openOrCreateDatabase("minhatarefas", MODE_PRIVATE, null);
+                                            bancoDados.execSQL("DELETE from tarefas WHERE nome = '" + tarefasEventuais.getNomeTarefa() + "' AND  tipo = 'Eventual' AND id = '" + tarefasEventuais.getId() + "'");
+                                            //bancoDados.execSQL("DELETE from tarefas WHERE nome = '" + tarefasEventuais.getNomeTarefa() + "'");
+                                            startActivity(new Intent(getContext(), MainActivity.class));
+                                            getActivity().finish();
+
+                                        }catch (Exception e){
+                                            e.printStackTrace();
+                                        }
+
+                                        Toast.makeText(getContext(),
+                                                "Exclusão realizada com sucesso!",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+                                dialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Toast.makeText(getContext(),
+                                                "Exclusão cancelada!",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                // Criar e exibir AlertDialog
+                                dialog.create();
+                                dialog.show();
+
+                            }
+
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            }
+                        }
+                )
+        );
+
+        // Fim evento de clique
+
+        return view;
+    }
+
+    public void criarTarefasDiarias() {
+
+        listaDiarias.clear();
+
+        //Banco de dados
+        try {
+            //Criar banco de dados
+            SQLiteDatabase bancoDados = getActivity().getApplicationContext().openOrCreateDatabase("minhatarefas", MODE_PRIVATE, null);
+
+            //Recuperar sites
+            String consulta = "SELECT id, nome, tipo, status FROM tarefas WHERE tipo = 'Diária' and status = 'S' GROUP BY nome ORDER BY id";
+            Cursor cursor = bancoDados.rawQuery(consulta, null);
+
+            if(consulta.isEmpty()){
+
+                Toast.makeText(getContext(), "Você ainda não possui nenhuma tarefa cadastrada!", Toast.LENGTH_SHORT).show();
+
+            }else{
+
+                //Recuperar índices da tabela
+                int indiceId = cursor.getColumnIndex("id");
+                int indiceNome = cursor.getColumnIndex("nome");
+                int indiceStatus = cursor.getColumnIndex("status");
+                int indiceTipo = cursor.getColumnIndex("tipo");
+
+                cursor.moveToFirst();
+                while (cursor!=null){
+                    Integer id = cursor.getInt(indiceId);
+                    String nome = cursor.getString(indiceNome);
+                    String status = cursor.getString(indiceStatus);
+                    String tipo = cursor.getString(indiceTipo);
+
+                    Diarias diarias = new Diarias(nome, tipo, status, id);
+                    listaDiarias.add(diarias);
+                    cursor.moveToNext();
+                }
+
+            }
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void criarTarefasEventuais() {
+
+        listaEventuais.clear();
+
+        //Banco de dados
+        try {
+            //Criar banco de dados
+            SQLiteDatabase bancoDados = getActivity().getApplicationContext().openOrCreateDatabase("minhatarefas", MODE_PRIVATE, null);
+
+            //Recuperar sites
+            String consulta = "SELECT id, nome, tipo, status FROM tarefas WHERE tipo = 'Eventual'  and status = 'S' GROUP BY nome ORDER BY id";
+            Cursor cursor = bancoDados.rawQuery(consulta, null);
+
+            if(consulta.isEmpty()){
+
+                Toast.makeText(getContext(), "Você ainda não possui nenhuma tarefa cadastrada!", Toast.LENGTH_SHORT).show();
+
+            }else{
+
+                //Recuperar índices da tabela
+                int indiceId = cursor.getColumnIndex("id");
+                int indiceNome = cursor.getColumnIndex("nome");
+                int indiceStatus = cursor.getColumnIndex("status");
+                int indiceTipo = cursor.getColumnIndex("tipo");
+
+                cursor.moveToFirst();
+                while (cursor!=null){
+                    Integer id = cursor.getInt(indiceId);
+                    String nome = cursor.getString(indiceNome);
+                    String status = cursor.getString(indiceStatus);
+                    String tipo = cursor.getString(indiceTipo);
+
+                    Eventuais eventuais = new Eventuais(nome, tipo, status, id);
+                    listaEventuais.add(eventuais);
+                    cursor.moveToNext();
+                }
+
+            }
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
