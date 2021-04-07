@@ -47,7 +47,7 @@
                         android:id="@+id/imageVoltarRealizadas"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
-                        android:background="@drawable/botaosombra"
+                        android:background="@drawable/botaoadicionar"
                         android:contentDescription="Botão Voltar"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
