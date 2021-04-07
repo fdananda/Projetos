@@ -61,7 +61,7 @@
                         android:id="@+id/imageViewIniciarEventuais"
                         android:layout_width="35dp"
                         android:layout_height="32dp"
-                        android:background="@drawable/botaosombra"
+                        android:background="@drawable/botaoadicionar"
                         android:contentDescription="Botão limpar"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
@@ -81,7 +81,7 @@
 
                     <View
                         android:id="@+id/divider21"
-                        android:layout_width="5dp"
+                        android:layout_width="10dp"
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent" />
 
@@ -89,14 +89,14 @@
                         android:id="@+id/imageEditarEventuais"
                         android:layout_width="35dp"
                         android:layout_height="32dp"
-                        android:background="@drawable/botaosombra"
+                        android:background="@drawable/botaoadicionar"
                         android:contentDescription="Botão Editar"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
                         android:src="@drawable/ic_create_black_24dp" />
 
                     <View
-                        android:id="@+id/divider323"
+                        android:id="@+id/divider22"
                         android:layout_width="10dp"
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent" />
@@ -108,8 +108,8 @@
                         android:background="@color/colorAccent" />
 
                     <View
-                        android:id="@+id/divider22"
-                        android:layout_width="5dp"
+                        android:id="@+id/divider222"
+                        android:layout_width="10dp"
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent" />
 
@@ -117,7 +117,7 @@
                         android:id="@+id/imageExcluirEventuais"
                         android:layout_width="35dp"
                         android:layout_height="32dp"
-                        android:background="@drawable/botaosombra"
+                        android:background="@drawable/botaoadicionar"
                         android:contentDescription="Botão Excluir"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
