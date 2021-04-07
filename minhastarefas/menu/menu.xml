@@ -7,10 +7,10 @@
         app:showAsAction="ifRoom" />
 
     <item android:id="@+id/verRealizadasMenu"
-        android:title="REALIZADAS"
+        android:title="Realizadas"
         app:showAsAction="never"/>
 
     <item android:id="@+id/verARelizarMenu"
-        android:title="A REALIZAR"
+        android:title="A realizar"
         app:showAsAction="never"/>
 </menu>
