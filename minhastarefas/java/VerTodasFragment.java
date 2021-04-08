@@ -49,8 +49,6 @@ public class VerTodasFragment extends Fragment {
     private RecyclerView recyclerViewTarefasEventuais;
     private List<Eventuais> listaEventuais = new ArrayList<>();
     private TextView textoVazioEventuais;
-    private CheckBox checkBoxEventuaisEditar;
-    private EditText textoEditar;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
@@ -154,7 +152,7 @@ public class VerTodasFragment extends Fragment {
                                 dialog.setCancelable(true);
                                 dialog.setIcon(android.R.drawable.ic_menu_close_clear_cancel);
                                 dialog.setTitle("Excluir Tarefa");
-                                dialog.setMessage("Deseja excluir a tarefa diária " + tarefasDiarias.getNomeTarefa() + " ?");
+                                dialog.setMessage("Deseja excluir permanentemente a tarefa diária " + tarefasDiarias.getNomeTarefa() + " ?");
                                 //Configurar ações para Sim e Não
                                 dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                                     @Override
@@ -242,7 +240,7 @@ public class VerTodasFragment extends Fragment {
                                 dialog.setCancelable(true);
                                 dialog.setIcon(android.R.drawable.ic_menu_close_clear_cancel);
                                 dialog.setTitle("Excluir Tarefa");
-                                dialog.setMessage("Deseja excluir a tarefa eventual " + tarefasEventuais.getNomeTarefa() + " ?");
+                                dialog.setMessage("Deseja excluir permanentemente a tarefa eventual " + tarefasEventuais.getNomeTarefa() + " ?");
                                 //Configurar ações para Sim e Não
                                 dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                                     @Override
