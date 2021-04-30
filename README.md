@@ -5,7 +5,7 @@ Links para projetos desenvolvidos
  App do tipo Ferramentas para Android - 10/2020<br>
  https://play.google.com/store/apps/details?id=com.fdananda.meusfavoritos
  
- <b>Aplicativo Minhas Tarefas</b><br>
+ <p><b>Aplicativo Minhas Tarefas</b><br></p>
  https://github.com/fdananda/projetos/tree/main/minhastarefas<br>
  App do tipo Ferramentas para Android - 04/2021<br>
  https://play.google.com/store/apps/details?id=com.fdananda.minhastarefas
